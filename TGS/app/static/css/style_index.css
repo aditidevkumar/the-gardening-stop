@@ -1,0 +1,29 @@
+.navbar-nav .dropdown-menu {
+    max-width: 250px; 
+    overflow-x: hidden; 
+}
+
+
+.navbar-nav .dropdown-menu .dropdown-item {
+    white-space: nowrap; 
+}
+.my-cart {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cart-icon {
+    margin-left: 5px;
+    font-size: 1.2em; 
+    vertical-align: middle;
+  }
+  .reduce-spacing .nav-item {
+    margin-right: 10px!important; 
+  }
+  
+  .reduce-spacing .nav-link {
+    padding-right: 15px!important;
+    padding-left: 5px!important; 
+  }
+
+

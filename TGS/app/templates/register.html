@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load form_filters %}
+
+{% block title %}Sign-Up{% endblock title %}
+
+{% block main-content %}
+<div class="container">
+    <div class="row my-2">
+        <div class="col-sm-6 offset-sm-3">
+            <h3 class="text-center">Register as a Customer</h3>
+            <hr>
+
+            <form action="" method="post" novalidate class="shadow p-5 bg-light rounded">
+                {% csrf_token %}
+                {% for fm in form %}
+                    <div class="mb-1">
+                        {{ fm.label_tag }}
+                        {{ fm|add_class:"form-control" }}
+                        <small class="text-danger">{{ fm.errors|striptags }}</small>
+                    </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-center">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" style="width: 150px;">
+                </div>
+
+                <div class="text-center text-primary fw-bold">
+                    <small>
+                        Existing User? 
+                        <a href="{%url 'login' %}" class="text-danger">Login Now</a>
+                    </small>
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger my-1 fade-in">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="alert alert-{{ msg.tags }} my-2 fade-in" role="alert">
+                            {{ msg }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alerts = document.querySelectorAll('.fade-in');
+        alerts.forEach(alert => {
+            alert.classList.add('show');
+            setTimeout(() => {
+                alert.classList.remove('show');
+                alert.classList.add('fade-out');
+            }, 3000); 
+        });
+    });
+</script>
+{% endblock main-content %}

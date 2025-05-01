@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Category{% endblock title %}
+
+{% block main-content %}
+<div class="container my-2">
+    <div class="row">
+        <!-- Sidebar: Categories -->
+        <div class="col-sm-3 mt-5">
+            <h4 class="mb-3"></h4>
+            <div class="list-group">
+                {% for val in title %}
+                    <a href="{% url 'category-title' val.title %}" class="list-group-item list-group-item-action" aria-current="true">
+                        {{ val.title }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="col-sm-9">
+            <h4 class="mb-4">Products</h4>
+            <div class="row">
+                {% for prod in product %}
+                    <div class="col-lg-4 col-md-6 text-center mb-4">
+                        <a href="{% url 'product-detail' prod.id %}" class="btn">
+                            <div class="card h-100">
+                                <img src="{{ prod.product_image.url }}" class="card-img-top" style="border-radius: 5px; height: 200px; object-fit: cover;" alt="{{ prod.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">{{ prod.title }}</h5>
+                                    
+                                    {% if prod.category in "H S T Cmb Cpr FP" %}
+                                    <p class="card-text text-danger fw-bold">
+                                            ₹{{ prod.discounted_price }}/-
+                                            <small class="fw-light text-decoration-line-through text-muted">₹{{ prod.selling_price }}</small>
+                                        </p>
+                                        
+                                    {% else %}
+                                        <p class="card-text text-danger fw-bold">₹{{ prod.selling_price }}/-
+                                        </p>
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

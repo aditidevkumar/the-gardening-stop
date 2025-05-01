@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Agro Chemicals{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Available Agro Chemicals</h2>
+    <div class="row">
+        {% for agro_chemical in agro_chemicals %}
+        <div class="col-md-4 mb-4 text-center">
+            <div class="agrochemical-item p-3 border rounded shadow-sm">
+                <a href="{% url 'agro-detail' agro_chemical.pk %}" class="text-decoration-none">
+                    <img src="{{ agro_chemical.agro_image.url }}" 
+                         class="img-fluid mb-3 rounded" 
+                         alt="{{ agro_chemical.title }}" 
+                         style="max-height: 200px; object-fit: cover;">
+                    <h5 class="mt-2 text-dark">{{ agro_chemical.title }}</h5>
+                    <p class="text-muted">₹{{ agro_chemical.selling_price }}</p>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CSS Styling -->
+<style>
+    .agrochemical-item img {
+        transition: transform 0.3s ease;
+    }
+    .agrochemical-item img:hover {
+        transform: scale(1.05);
+    }
+    .agrochemical-item {
+        transition: box-shadow 0.3s ease;
+    }
+    .agrochemical-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock main-content %}

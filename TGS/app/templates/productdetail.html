@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Category{% endblock title %}
+
+{% block main-content %}
+<div class="container">
+    <div class="row justify-content-between align-items-center mt-4">
+        <!-- Product Image -->
+        <div class="col-lg-5 text-center mt-1 mb-4">
+            <img src="{{ product.product_image.url }}" 
+                 class="img-fluid" 
+                 style="width: 65%; object-fit: contain;" alt="{{ product.title }}">
+        </div>
+        
+        <!-- Product Details -->
+        <div class="col-lg-6">
+            <h2>Product Features</h2>
+            <h3>{{product.title}}</h3>
+            <ul class="fs-5" style="font-family: Rajdhani;">
+
+                {% if product.category == 'AG' %}
+                    <!-- Fields specific to Agro -->
+                    
+                    <br>
+                    <li>Cost: ₹{{ product.selling_price }}/- per packet</li>
+                    <li>Description: {{ product.weather }}</li>
+                    <li>Advantages: {{ product.proadd }}</li>
+                    <li>Used for: {{ product.How_to_Handle_Tips }}</li>
+
+                {% elif product.category == 'Tool' %}
+                    <li>Description: {{ product.weather }}</li>
+                    <li>Advantages: {{ product.proadd }}</li>
+                    <li>Used for: {{ product.How_to_Handle_Tips }}</li>
+
+                {% elif product.category == 'Soil' %}
+                    <br>
+                    
+                    <li>Cost: ₹{{ product.selling_price }}/- per packet</li>
+                    <li>Description: {{ product.weather }}</li>
+                    <li>Advantages: {{ product.proadd }}</li>
+            
+                {% elif product.category == 'Seed' %}
+                    <li>Soil Type: {{ product.weather }}</li>
+                    <li>Sowing Months: {{ product.proadd }}</li>
+                    <li>How to Handle Tips : {{product.How_to_Handle_Tips}}</li>
+
+                {% else %}
+                    
+                    <h5 style="color: red;">₹{{ product.discounted_price }}/-</h5>
+                    <small class="text-decoration-line-through text-muted fs-5">₹{{ product.selling_price }}/-</small>
+                    <br>
+                    <li>Botanical name: {{ product.botanical_name }}</li>
+                    <li>Weather: {{ product.weather }}</li>
+                    <li>How to take care: {{ product.How_to_Handle_Tips }}</li>
+                    <li>Advantages of planting {{ product.title }}: {{ product.proadd }}</li>
+                {% endif %}
+            </ul>
+            <!-- Buttons -->
+            <form action="/add-to-cart" class="d-inline">
+                <input type="hidden" name="prod_id" value="{{ product.id }}"/>
+                <button type="submit" class="btn btn-primary shadow px-5 py-2 ms-4">Add to Cart</button>
+            </form>
+            <a href="/cart" class="btn btn-danger shadow px-5 py-2 ms-4" id="buy-now-btn">Buy Now</a>
+            {% if wishlist %}
+                <a pid="{{ product.id }}" class="minus-wishlist btn btn-danger shadow px-5 py-2 ms-4">
+                    <i class="fas fa-heart fa-lg"></i>
+                </a>
+            {% else %}
+                <a pid="{{ product.id }}" class="plus-wishlist btn btn-success shadow px-5 py-2 ms-4">
+                    <i class="fas fa-heart fa-lg"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+  
+{% endblock main-content %}

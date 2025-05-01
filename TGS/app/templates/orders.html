@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block title %}Your Orders{% endblock title %}
+
+{% block main-content %}
+<section class="orders-section">
+    <h2 class="text-center">Your Orders</h2>
+
+    {% if orders %}
+        <div class="orders-table-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th id="date-header" class="sortable text-center">Date <span class="sort-icon">⇅</span></th>
+                        <th id="product-header" class="sortable text-center">Products <span class="sort-icon">⇅</span></th>
+                        <th class="text-center">Total Price</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-body">
+                    {% for order in orders %}
+                        <tr>
+                            <!-- Format date to show only d-m-Y -->
+                            <td>{{ order.order_date|date:"d-m-Y" }}</td>
+                            <td>
+                                <ul class="product-list">
+                                    {% for item in order.orderitem_set.all %}
+                                        <li>{{ item.quantity }} x {{ item.product }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ order.total_price }}</td>
+                            <td><span class="order-status {{ order.status|lower }}">{{ order.status }}</span></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="no-orders-message">You have no orders at the moment.</p>
+    {% endif %}
+</section>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f3; 
+        }
+
+        .orders-section {
+            padding: 33px;
+            background-color: #ffffff; 
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px; 
+        }
+
+        h2 {
+            color: #4CAF50; 
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .orders-table-container {
+            overflow-x: auto; 
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse; 
+            margin-top: 18px; 
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd; 
+        }
+
+        .orders-table th {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .sortable:hover {
+            background-color: #357a38; 
+        }
+
+        .orders-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .product-list {
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0; 
+        }
+
+        .order-status {
+            padding: 4px 8px;
+            border-radius: 20px; 
+            color: #fff;
+            text-transform: capitalize; 
+        }
+
+        .order-status.pending {
+            background-color: #ff9800; 
+        }
+
+        .order-status.shipped {
+            background-color: #4c87af;
+        }
+
+        .order-status.cancelled{
+            background-color: #f44336;
+        }
+        .order-status.delivered{
+            background-color: #4caf50; 
+        }
+
+        .no-orders-message {
+            color: #555;
+            font-style: italic;
+            margin-top: 18px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let isAscendingDate = true;
+            let isAscendingProduct = true;
+
+            function sortRows(compareFunction, isAscending, columnName) {
+                let rows = Array.from(document.querySelectorAll('tbody tr'));
+
+                rows.sort((a, b) => {
+                    let valueA = compareFunction(a);
+                    let valueB = compareFunction(b);
+
+                    if (valueA < valueB) return isAscending ? -1 : 1;
+                    if (valueA > valueB) return isAscending ? 1 : -1;
+                    return 0;
+                });
+
+                let tbody = document.getElementById('orders-body');
+                tbody.innerHTML = ''; 
+                rows.forEach(row => tbody.appendChild(row)); 
+
+                
+                document.querySelectorAll('.sort-icon').forEach(icon => icon.textContent = '⇅');
+                document.querySelectorAll('th').forEach(th => th.classList.remove('sorted-asc', 'sorted-desc'));
+
+                document.getElementById(columnName + '-header').classList.add(isAscending ? 'sorted-asc' : 'sorted-desc');
+                document.getElementById(columnName + '-header').querySelector('.sort-icon').textContent = isAscending ? '↑' : '↓';
+            }
+
+            document.getElementById('date-header').addEventListener('click', function () {
+                sortRows(
+                    row => new Date(row.querySelector('td').textContent),
+                    isAscendingDate,
+                    'date'
+                );
+                isAscendingDate = !isAscendingDate;
+            });
+
+            document.getElementById('product-header').addEventListener('click', function () {
+                sortRows(
+                    row => row.querySelector('.product-list li').textContent.trim().toLowerCase(),
+                    isAscendingProduct,
+                    'product'
+                );
+                isAscendingProduct = !isAscendingProduct;
+            });
+        });
+    </script>
+{% endblock main-content %}

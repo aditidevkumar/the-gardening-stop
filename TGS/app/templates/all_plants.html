@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Plants{% endblock title %}
+
+{% block main-content %}
+<div class="container my-2">
+    <div class="row">
+        <!-- Sidebar: Categories -->
+        <div class="col-sm-3">
+            <h4 class="mb-3">Categories:</h4>
+            <div class="list-group">
+                <a href="{% url 'category' 'H' %}" class="list-group-item list-group-item-action">Herb</a>
+                <a href="{% url 'category' 'S' %}" class="list-group-item list-group-item-action">Shrub</a>
+                <a href="{% url 'category' 'T' %}" class="list-group-item list-group-item-action">Trees</a>
+                <a href="{% url 'category' 'Cmb' %}" class="list-group-item list-group-item-action">Climber</a>
+                <a href="{% url 'category' 'Cpr' %}" class="list-group-item list-group-item-action">Creeper</a>
+                <a href="{% url 'category' 'FP' %}" class="list-group-item list-group-item-action">Flowering Plants</a>
+                <a href="{% url 'category' 'AG'%}" class="list-group-item list-group-item-action">AgroChemicals</a>
+                <a href="{% url 'category' 'Tool' %}" class="list-group-item list-group-item-action">Tools</a>
+                <a href="{% url 'category' 'Soil' %}" class="list-group-item list-group-item-action">Soils</a>
+                <a href="{% url 'category' 'Seed' %}" class="list-group-item list-group-item-action">Seeds</a>
+                
+                
+                
+                
+            </div>
+        </div>
+
+        <!-- Main Content: All Plants -->
+        <div class="col-sm-9">
+            <h4 class="mb-4">All Products</h4>
+            <div class="row">
+                {% for prod in product %}
+                <div class="col-lg-4 col-md-6 text-center mb-4">
+                    <div class="plant-item p-3 border rounded shadow-sm">
+                        <a href="{% url 'product-detail' prod.id %}" class="text-decoration-none">
+                            <img src="{{ prod.product_image.url }}" 
+                                 class="img-fluid mb-3 rounded" 
+                                 alt="{{ prod.title }}" 
+                                 style="max-height: 200px; object-fit: cover;">
+                            <h5 class="mt-2 text-dark">{{ prod.title }}</h5>
+                            <p class="text-muted">₹{{ prod.discounted_price }}</p>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS for styling and hover effect -->
+<style>
+    .plant-item img {
+        transition: transform 0.3s ease;
+    }
+    .plant-item img:hover {
+        transform: scale(1.05);
+    }
+    .plant-item {
+        transition: box-shadow 0.3s ease;
+    }
+    .plant-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock main-content %}

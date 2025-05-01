@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ soil.title }}{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row justify-content-between align-items-center">
+        <!-- Soil Image -->
+        <div class="col-lg-5 text-center mb-4">
+            <img src="{{ soil.soil_image.url }}" 
+                 class="img-fluid" 
+                 style="width: 65%; object-fit: contain;" 
+                 alt="{{ soil.title }}">
+        </div>
+        
+        <!-- Soil Details -->
+        <div class="col-lg-6">
+            <h1 style="font-family: Georgia; font-size: 40px;">{{ soil.title }}</h1>
+            <h5>₹{{ soil.selling_price }}/-</h5>  <!-- Replace with actual price field if needed -->
+            <br>
+            <h4>Soil Features</h4>
+            <ul class="fs-5" style="font-family: Rajdhani;">
+                <li>Description: {{ soil.useful_for }}</li>
+                <li>Good for Crops like :{{soil.crops_to_sow}}</li>
+            </ul>
+
+            <!-- Buttons -->
+            <div class="buttons d-flex mt-4" style="font-family: Rajdhani;">
+                <form action="/add_to_cart" class="d-inline">
+                    <input type="hidden" name="soil_id" value="{soil.id}"/>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger p-2 me-2 btn-lg text-white">Add to Cart</button>
+                </form>
+                <a href="{% url 'show_cart' %}" class="btn btn-dark p-2 btn-lg text-white text-decoration-none" id="buy-now-btn">Buy Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock main-content %}

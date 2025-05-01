@@ -1,0 +1,44 @@
+<!-- product_search.html -->
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block main-content %}
+<div class="container mt-2">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-4 text-center">Search Results for "{{ query }}"</h1>
+            
+            <!-- Search form -->
+            <form action="{% url 'product_search' %}" class="input-group mb-4">
+                <input type="text" name="query" class="form-control" placeholder="Search for products..." value="{{ query }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+            
+            <hr>
+            
+            <!-- Search results -->
+            {% if products %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for product in products %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.title }}" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.title }}</h5>
+                            <p class="card-text text-muted">₹{{ product.selling_price }}</p>
+                            <a href="{% url 'product-detail' product.id %}" class="btn btn-success">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center mt-4">
+                <p>No products found. Please try a different search.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Soil Types{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Available Soil Types</h2>
+    <div class="row">
+        {% for soil in soils %}
+        <div class="col-md-4 mb-4 text-center">
+            <div class="soil-item p-3 border rounded shadow-sm">
+                <a href="{% url 'soil-detail' soil.pk %}" class="text-decoration-none">
+                    <img src="{{ soil.soil_image.url }}" 
+                         class="img-fluid mb-3 rounded" 
+                         alt="{{ soil.title }}" 
+                         style="max-height: 200px; object-fit: cover;">
+                    <h5 class="mt-2 text-dark">{{ soil.title }}</h5>
+                    <p class="text-muted">₹{{ soil.selling_price }}</p>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CSS Styling for hover effect -->
+<style>
+    .soil-item img {
+        transition: transform 0.3s ease;
+    }
+    .soil-item img:hover {
+        transform: scale(1.05);
+    }
+    .soil-item {
+        transition: box-shadow 0.3s ease;
+    }
+    .soil-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock main-content %}

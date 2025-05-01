@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Our Recommendation{% endblock title %}
+
+{% block main-content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4" style="font-weight: bold; color: #2c3e50;">Products You May Like</h2>
+    
+    <div class="row">
+        {% for product in recommended_products %}
+        <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card shadow-lg border-0" style="border-radius: 10px; overflow: hidden; max-width: 280px; width: 100%;">
+                <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.title }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-center" style="font-size: 1.15rem; font-weight: bold; color: #34495e;">{{ product.title }}</h5>
+                    <p class="card-text text-center" style="color: #7f8c8d;">
+                        {% if product.category == 'AG'%}
+                            <strong>Price:</strong> ₹{{ product.selling_price }}<br>
+                            <strong>Advantage:</strong> {{ product.proadd }}<br>
+                        {%elif product.category == 'Tool'%}                        
+                            <strong>Price:</strong> ₹{{ product.selling_price }}<br>
+                            <strong>Advantage:</strong> {{ product.proadd }}<br>
+                        {%elif product.category == 'Soil'%}                        
+                            <strong>Price:</strong> ₹{{ product.selling_price }}<br>
+                            <strong>Advantage:</strong> {{ product.proadd }}<br>
+                        {%elif product.category == 'Seed'%}                        
+                            <strong>Price:</strong> ₹{{ product.selling_price }}<br>
+                            <strong>Advantage:</strong> {{ product.proadd }}<br>
+                        {% else %}
+                            <strong>Price:</strong> ₹{{ product.discounted_price }}<br>
+                            <strong>Advantage:</strong> {{ product.proadd }}
+                        {% endif %}
+
+                    </p>
+                    <div class="d-flex justify-content-between mt-auto">
+                        <a href="{% url 'product-detail' product.id %}?product_id={{ product.id }}" class="btn btn-sm btn-outline-primary" style="flex: 1; margin-right: 10px;">View Details</a>
+                        <form action="/add-to-cart" class="d-inline" style="flex: 1;">
+                            <input type="hidden" name="prod_id" value="{{ product.id }}"/>
+                            <button type="submit" class="btn btn-sm btn-outline-success" style="width: 100%;">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not recommended_products %}
+        <p class="text-center text-muted" style="font-size: 1.2rem;">No recommended products available at the moment.</p>
+    {% endif %}
+</div>
+
+<style>
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.btn:hover {
+    background-color: #2980b9;
+}
+.card-img-top {
+    border-bottom: 1px solid #ddd;
+}
+</style>
+{% endblock main-content %}

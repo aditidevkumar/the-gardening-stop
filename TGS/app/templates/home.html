@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block banner-slider %}
+  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2250">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'image/b1.jpg' %}" class="d-block w-100 carousel-image" alt="First slide">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/b2.jpg' %}" class="d-block w-100 carousel-image" alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/b5.jpg' %}" class="d-block w-100 carousel-image" alt="Third slide">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/b4.jpg' %}" class="d-block w-100 carousel-image" alt="Fourth slide">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/b6.jpg' %}" class="d-block w-100 carousel-image" alt="Fifth slide">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'image/b7.jpg' %}" class="d-block w-100 carousel-image" alt="Sixth slide">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <style>
+    .carousel-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+    .carousel-control-next, .carousel-control-prev {
+      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+    }
+  </style>
+{% endblock banner-slider %}
+
+{% block information %}
+<div class="container">
+  <div class="row bg-success text-center p-5 text-white border-bottom shadow">
+    <h1>The Gardening Stop</h1>
+    <small class="fs-5">Discover a variety of gardening tools, plants, and more to help you grow the perfect garden.
+      <p>At TGS, we are dedicated to providing the best quality gardening products to help you cultivate your dream garden.
+     With years of experience and a passion for plants, we aim to deliver products that enhance the beauty and health of your garden</p></small>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <h4 class="text-primary">Gardening Tools</h4>
+      <p>Find the best tools to keep your garden looking beautiful and healthy. From pruning shears to shovels, we have everything you need.</p>
+
+    </div>
+    <div class="col-md-4 mb-4">
+      <h4 class="text-primary">Plants & Seeds</h4>
+      <p>Choose from a wide selection of plants and seeds to add life and color to your garden. We offer herbs, shrubs, flowers, and more.</p>
+      
+    </div>
+    <div class="col-md-4 mb-4">
+      <h4 class="text-primary">Agro Chemicals</h4>
+      <p>Ensure your garden thrives with our range of high-quality fertilizers, pesticides, and other agro chemicals.</p>
+    </div>
+  </div>
+</div>
+{% endblock information %}
+
+{% block main-content %}
+<div class="container">
+  <h2 class="text-center">Available Categories of Products</h2>
+  <br><br>
+  <div class="row">
+    <div class="col-md-4 wow fadeInUp mb-4" data-wow-duration="1s" data-wow-delay="0.6s">
+      <div class="Herbs text-center">
+        <a href="{% url 'all-plants' %}">
+          <img src="{% static 'image/Herb.jpg' %}" class="img-fluid category-img" alt="">
+          <p class="mlkpro">All Products</p>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 wow fadeInUp mb-4" data-wow-duration="1s" data-wow-delay="0.6s">
+      <div class="trees text-center">
+        <a href="{% url 'category' 'Tool' %}">
+          <img src="{% static 'image/b3.jpg' %}" class="img-fluid category-img" alt="">
+          <p class="mlkpro">Tools</p>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 wow fadeInUp mb-4" data-wow-duration="1s" data-wow-delay="0.6s">
+      <div class="Shrubs text-center">
+        <a href="{% url 'category' 'AG' %}">
+          <img src="{% static 'image/shrub_1.jpg' %}" class="img-fluid category-img" alt="">
+          <p class="mlkpro">Agro Chemicals</p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-4 wow fadeInUp me-4 mb-4" data-wow-duration="1s" data-wow-delay="0.6s">
+      <div class="trees text-center">
+        <a href="{% url 'category' 'Seed' %}">
+          <img src="{% static 'image/Seeds.jpg' %}" class="img-fluid category-img" alt="">
+          <p class="mlkpro">Seeds</p>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 wow fadeInUp mb-4" data-wow-duration="1s" data-wow-delay="0.6s">
+      <div class="trees text-center">
+        <a href="{% url 'category' 'Soil' %}">
+          <img src="{% static 'image/soil.jpg' %}" class="img-fluid category-img" alt="">
+          <p class="mlkpro">Soils</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-1">
+  <h2 class="text-center">Featured Products</h2>
+  <div id="featured-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href="{% url 'all-plants'  %}">
+        <img src="{% static 'image/feature1.jpg' %}" class="d-block w-100 featured-image" alt="Featured product 1">
+        </a>
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Plants</h5>
+          <p>High-quality plants and seeds available now.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <a href="{% url 'category' 'Tool'%}">
+        <img src="{% static 'image/tool.jpg' %}" class="d-block w-100 featured-image" alt="Featured product 2">
+      </a>
+        <div class="carousel-caption d-none d-md-block">
+          <h5> Gardening Tools</h5>
+          <p>Explore our range of tools for gardening.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <a href="{% url 'category' 'AG'%}">
+        <img src="{% static 'image/agro.jpg' %}" class="d-block w-100 featured-image" alt="Featured product 2">
+      </a>
+        <div class="carousel-caption d-none d-md-block">
+          <h5> Agro Chemicals</h5>
+          <p>Explore our range of Agro Chemicals for gardening.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .category-img {
+    transition: transform 0.3s ease;
+  }
+  .category-img:hover {
+    transform: scale(1.05);
+  }
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  .featured-image {
+    height: 350px;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  new WOW().init();
+</script>
+
+{% endblock main-content %}

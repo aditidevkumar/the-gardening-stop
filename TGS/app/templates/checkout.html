@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Checkout{% endblock title %}
+{% block main-content %}
+<div class="container mt-1">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="mb-4">Order Summary</h4>
+            <hr>
+            {% for item in cart_items %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Product: {{ item.product.title }}</h5>
+                        <p class="card-text">Quantity: {{ item.quantity }}</p>
+                        <p class="fw-bold">Price: Rs. {{ item.product.discounted_price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="fw-bold">
+                Total Cost + Rs. 40 (Delivery): Rs. {{ totalamount }}
+            </div>
+            <small class="text-muted mt-2">
+                Terms and conditions: Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum dicta dolores ab laudantium voluptatibus eveniet nemo fugiat nihil dolore veniam.
+            </small>
+        </div>
+
+        <div class="col-md-6">
+            <h4 class="mb-4">Delivery Address</h4>
+            <form method="post" id="myform">
+                {% csrf_token %}
+                
+                {% for ad in add %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ad.name }}</h5>
+                        <p class="card-text">Mobile: {{ ad.mobile }}</p>
+                        <p class="card-text">{{ ad.city }} {{ ad.state }} - {{ ad.pincode }}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="custadd" id="custadd{{ forloop.counter }}" value="{{ ad.id }}">
+                            <label class="form-check-label" for="custadd{{ forloop.counter }}">
+                                Select Address
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Total Amount Input (Readonly) -->
+                <div class="mb-3">
+                    <label for="totalamount" class="form-label">Total Amount</label>
+                    <input type="number" class="form-control" name="totalamount" value="{{ totalamount }}" readonly>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Available Seeds{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Available Seeds</h2>
+    <div class="row">
+        {% for seed in seeds %}
+        <div class="col-md-4 mb-4 text-center">
+            <div class="seed-item p-3 border rounded shadow-sm">
+                <a href="{% url 'seed-detail' seed.pk %}" class="text-decoration-none">
+                    <img src="{{ seed.seed_image.url }}" 
+                         class="img-fluid mb-3 rounded" 
+                         alt="{{ seed.title }}" 
+                         style="max-height: 200px; object-fit: cover;">
+                    <h5 class="mt-2 text-dark">{{ seed.title }}</h5>
+                    <p class="text-muted">₹{{ seed.selling_price }}</p>
+                </a>
+                <!-- Add to Cart Button -->
+                <button class="btn btn-danger mt-2 add-to-cart-btn" data-seed-id="{{ seed.id }}">Add to Cart</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CSS Styling -->
+<style>
+    .seed-item img {
+        transition: transform 0.3s ease;
+    }
+    .seed-item img:hover {
+        transform: scale(1.05);
+    }
+    .seed-item {
+        transition: box-shadow 0.3s ease;
+    }
+    .seed-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<!-- JavaScript for Add to Cart -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add to Cart button functionality
+        document.querySelectorAll('.add-to-cart-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const seedId = this.getAttribute('data-seed-id');
+                alert('Seed ID ' + seedId + ' added to cart!');
+                // You can add AJAX or Fetch here to update the cart asynchronously
+            });
+        });
+    });
+</script>
+{% endblock main-content %}

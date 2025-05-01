@@ -1,0 +1,130 @@
+<!-- templates/contact.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block main-content %}
+<div class="container my-2">
+    <h2 class="text-center mb-2">Get in Touch</h2>
+    
+    <div class="row">
+        <!-- Contact Form -->
+        <div class="col-md-6 mb-3">
+            <h4 class="mb-3">Send Us a Message</h4>
+            <form action="{% url 'contact' %}" method="POST" id="contact-form">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="mb-2">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="mb-2">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control form-control-sm" id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm w-100">Submit</button>
+            </form>
+        </div>
+
+        <!-- Contact Details & Map -->
+        <div class="col-md-6">
+            <h4 class="mb-3">Our Contact Information</h4>
+            <p><strong>Address:</strong> 123 Garden Lane, Green City, Country</p>
+            <p><strong>Phone:</strong> +123 456 7890</p>
+            <p><strong>Email:</strong> support@gardeningstop.com</p>
+
+            <!-- Map Placeholder -->
+            <div class="map-container" style="position: relative; padding-bottom: 45%; height: 0; overflow: hidden;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d221064.17963680386!2d-90.0473777!3d30.033191!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8620a454b2118265%3A0xdb065be85e22d3b4!2sNew%20Orleans%2C%20LA%2C%20USA!5e0!3m2!1sen!2sin!4v1728637514739!5m2!1sen!2sin"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Animation -->
+<div id="success-alert" class="alert alert-success" style="display:none;">
+    <span class="party-popper">🎉</span> Your message has been sent successfully!
+</div>
+
+<!-- Custom CSS for styling -->
+<style>
+    #contact-form input, #contact-form textarea {
+        border-radius: 5px;
+        box-shadow: none;
+        border: 1px solid #ced4da;
+    }
+
+    #contact-form input:focus, #contact-form textarea:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .map-container {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    #success-alert {
+        position: relative;
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .party-popper {
+        font-size: 24px;
+        animation: pop 1s ease-in-out forwards;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+</style>
+
+<!-- JavaScript for form submission and success alert -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(contactForm);
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' // To differentiate AJAX calls in Django
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success alert with animation
+                    const successAlert = document.getElementById('success-alert');
+                    successAlert.style.display = 'block';
+                    setTimeout(() => {
+                        successAlert.style.display = 'none'; // Hide after 3 seconds
+                    }, 3000);
+
+                    // Refresh the page after showing the alert
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 4000); // Refresh after the alert is gone
+                } else {
+                    // Handle errors
+                    alert('There was an error sending your message. Please try again.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+{% endblock main-content %}

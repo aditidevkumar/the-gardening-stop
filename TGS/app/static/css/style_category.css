@@ -1,0 +1,54 @@
+/* .list-group-item {
+    font-size: 16px;
+    color: #333;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0; 
+    color: #007bff; 
+} */
+/* Option 1: Apply globally to all list-group-items */
+.list-group-item {
+    text-decoration: none;
+}
+
+/* Option 2: Custom class for specific items */
+.no-underline {
+    text-decoration: none;
+}
+
+/* Optional: On hover, keep the underline removed */
+.list-group-item:hover {
+    text-decoration: none;
+}
+
+/* Remove underline from category links */
+.list-group-item {
+    text-decoration: none;
+}
+
+/* Remove underline from product links */
+
+.btn:hover {
+    text-decoration: none;
+     /* Optional: Customize hover color if needed */
+}
+.btn {
+    border: none; /* Remove default button border */
+    background-color: transparent; /* Make the button background transparent */
+}
+
+.product-image img {
+    border: 1px solid #ddd; /* Optional: Add border for better visibility */
+    border-radius: 5px; /* Optional: Round image corners */
+}
+
+.fw-bold.text-danger {
+    font-size: 18px;
+}
+
+.text-decoration-line-through {
+    text-decoration: line-through;
+    color: #db1f1f; /* Light gray for strikethrough */
+}
+

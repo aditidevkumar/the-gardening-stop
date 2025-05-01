@@ -1,0 +1,8 @@
+body {
+    font-size: 10px;  /* Adjust this size as per your preference */
+    font-family: Arial, sans-serif;  /* Optional: Define a global font-family */
+}
+body {
+    line-height: 1rem; /* Adjust this value as needed */
+}
+

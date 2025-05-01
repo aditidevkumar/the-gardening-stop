@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock title %}
+
+{% block main-content %}
+<div class="container my-3">
+    <div class="row">
+
+
+
+
+
+        <div class="col-sm-12 text-center mb-2">
+            <h3 class="fw-bold"><span class="text-capitalize text-primary">{{ request.user }}'s</span> Address Book</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="list-group">
+                <a href="{% url 'profile' %}" class="list-group-item list-group-item-action ">
+                    <i class="fa-solid fa-user"></i> Profile
+                </a>
+                <a href="{% url 'address' %}" class="list-group-item list-group-item-action active">
+                    <i class="fa-regular fa-address-book"></i> Address
+                </a>
+            </div>
+        </div>
+
+
+        <div class="col-sm-7 offset-sm-1">
+            <div class="row">
+                {% for ad in add %}
+                    <div class="col-sm-4">
+                        <div class="card m-2 shadow-sm">
+                            <div class="card-body p-3">
+                                <h5 class="card-title">Address {{ forloop.counter }}</h5>
+                                <p class="mb-1"><strong>Name:</strong> {{ ad.name }}</p>
+                                <p class="mb-1"><strong>City:</strong> {{ ad.city }}</p>
+                                <p class="mb-1"><strong>Mobile:</strong> {{ ad.mobile }}</p>
+                                <p class="mb-1"><strong>State:</strong> {{ ad.state }}</p>
+                                <p class="mb-1"><strong>Pincode:</strong> {{ ad.pincode }}</p>
+                                <p class="text-center"><a href="{% url 'updateAddress' pk=ad.id %}" type="button" class="btn btn-success">Update</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

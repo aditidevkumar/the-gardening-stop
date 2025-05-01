@@ -1,0 +1,43 @@
+<!-- toollist.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gardening Tools{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Available Gardening Tools</h2>
+    <div class="row">
+        {% for tool in tools %}
+        <div class="col-md-4 mb-4 text-center">
+            <div class="tool-item p-3 border rounded shadow-sm">
+                <a href="{% url 'tool-detail' tool.pk %}" class="text-decoration-none">
+                    <img src="{{ tool.tool_image.url }}" 
+                         class="img-fluid mb-3 rounded" 
+                         alt="{{ tool.title }}" 
+                         style="max-height: 200px; object-fit: cover;">
+                    <h5 class="mt-2 text-dark">{{ tool.title }}</h5>
+                    <p class="text-muted">₹{{ tool.selling_price }}</p>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CSS Styling -->
+<style>
+    .tool-item img {
+        transition: transform 0.3s ease;
+    }
+    .tool-item img:hover {
+        transform: scale(1.05);
+    }
+    .tool-item {
+        transition: box-shadow 0.3s ease;
+    }
+    .tool-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock main-content %}
